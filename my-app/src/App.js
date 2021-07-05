@@ -7,6 +7,7 @@ import Form from './componets/Form';
 import '@fontsource/roboto';
 import { PDFDocument } from 'pdf-lib';
 import Day from './classes/Day'
+import Days from './classes/Days'
 
 function App() {
   const [updatedPDF, setUpdatedPDF] = useState(0);
@@ -37,6 +38,9 @@ function App() {
   const [saturday, setSat] = useState(new Day("SAT"));
   const [sunday, setSun] = useState(new Day("SUN"));
 
+  const abvList = ["MON", "TUES", "WED", "THUR", "FRI", "SAT", "SUN"]
+  const [daysOBJ, setDays] = useState(new Days(abvList))
+  
   const [timeCard, setTimeCard] = useState({
     "Name" : undefined,
     "Position": undefined,
@@ -68,16 +72,14 @@ function App() {
     
     const daysData = localStorage.getItem("my-days"); 
     if (daysData) {
-      const dayslist = (JSON.parse(daysData))
-      dayslist.forEach((day, i) => {
-        setters[i](day);
-      })
-    }
+        setDays(JSON.parse(daysData))
+    };
+
     }, [])
 
   useEffect(() => {
     localStorage.setItem("my-time-card", JSON.stringify(timeCard))
-    localStorage.setItem("my-days", JSON.stringify(days))
+    localStorage.setItem("my-days", JSON.stringify(daysOBJ))
   })
 
   return (
@@ -97,7 +99,10 @@ function App() {
         timeCard = {timeCard}
         setTimeCard = {setTimeCard}
         setters={setters}
-        monday={monday}
+        days={days}
+        daysOBJ={daysOBJ}
+        setDays={setDays}
+        abvList={abvList}
         />
       </header>  
     </div>

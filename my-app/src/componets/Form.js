@@ -1,6 +1,5 @@
-import React from 'react'
-import MenuItem from '@material-ui/core/MenuItem'
-import Avatar from '@material-ui/core/Avatar';
+import React from 'react';
+import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,50 +11,50 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+// import { createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import DayInputs from './DayInputs.js'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://material-ui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(7),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   paper: {
+//     marginTop: theme.spacing(7),
+//     display: 'flex',
+//     flexDirection: 'column',
+//     alignItems: 'center',
+//   },
+//   avatar: {
+//     margin: theme.spacing(1),
+//     backgroundColor: theme.palette.secondary.main,
+//   },
+//   form: {
+//     width: '100%', // Fix IE 11 issue.
+//     marginTop: theme.spacing(3),
+//   },
+//   submit: {
+//     margin: theme.spacing(3, 0, 2),
+//   },
+// }));
 
 
 const Form = (props) => {
-    const classes = useStyles();
-    const {timeCard, setTimeCard, setters, monday} = props
+    // const classes = useStyles();
+    const {timeCard, setTimeCard, setters, days, daysOBJ, setDays, abvList} = props
 
     function handleChange(e) {
         e.persist();
@@ -66,15 +65,14 @@ const Form = (props) => {
     function handleWeekChange(e) {
         e.persist();
         setTimeCard(prevTC => ({...prevTC, [e.target.name]: e.target.value }));
-        setters.forEach((setter, i)=>{
+        abvList.forEach((abv, i)=>{
             const dateSunday = new Date(Date.parse(`${e.target.value}T00:00:00`));             
             const date = new Date(dateSunday.setDate(dateSunday.getDate() - (6 - i)))
-            const formatedDate = `${date.getMonth()}/${date.getDate()}`
+            const formatedDate = `${date.getMonth()+1}/${date.getDate()}`
             console.log(`i:${i}, date:${date}, fd:${formatedDate}`)
            
-            setter(prevDay => ({...prevDay, [`${prevDay.abv}Date_es_:date`]  : formatedDate})) 
-            console.log({...timeCard})
-            console.log(monday)
+            setDays(prevDays => ({...prevDays, [`${abv}Date_es_:date`]  : formatedDate})) 
+            console.log(daysOBJ)
     })
     }
 
@@ -85,14 +83,11 @@ const Form = (props) => {
     return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <div className="classes.paper">
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit} onInput={handleChange} noValidate>
+        <form className="classes.form" onSubmit={handleSubmit} onInput={handleChange} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -134,7 +129,10 @@ const Form = (props) => {
                 }}
               />
             </Grid>
-            <DayInputs Days={timeCard.Days}/>
+            <DayInputs 
+                daysOBJ={daysOBJ}
+                setDays={setDays}
+                abvList={abvList}/>
             </Grid> 
             {/* <Grid item xs={12}>
               <FormControlLabel
@@ -147,7 +145,7 @@ const Form = (props) => {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className="classes.submit"
             // onClick={e => console.log(e)}
           >
             Sign Up
@@ -162,7 +160,6 @@ const Form = (props) => {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
       </Box>
     </Container>
     )
