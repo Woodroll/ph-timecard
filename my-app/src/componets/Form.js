@@ -54,7 +54,7 @@ import DayInputs from './DayInputs.js'
 
 const Form = (props) => {
     // const classes = useStyles();
-    const {timeCard, setTimeCard, setters, days, daysOBJ, setDays, abvList} = props
+    const {timeCard, setTimeCard, daysOBJ, setDays, abvList} = props
 
     function handleChange(e) {
         e.persist();

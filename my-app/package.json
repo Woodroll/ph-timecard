@@ -1,7 +1,7 @@
 {
   "name": "my-app",
   "version": "0.1.0",
-  "homepage":"https://github.com/Woodroll/ph-timecard",
+  "homepage":"https://woodroll.github.io/ph-timecard/",
   "private": true,
   "dependencies": {
     "@babel/plugin-syntax-class-properties": "^7.12.13",

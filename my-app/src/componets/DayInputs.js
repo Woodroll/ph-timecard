@@ -24,8 +24,12 @@ export default function DayInputs(props) {
         setDays(prevDays => ({...prevDays, ["GRAND TOTALHOURS WORKED"]: total.toString() }));
     }
 
+    const totals = [daysOBJ["MONHOURS WORKED"], daysOBJ["TUEHOURS WORKED"],daysOBJ["WEDHOURS WORKED"],
+    daysOBJ["THURHOURS WORKED"], daysOBJ["FRIHOURS WORKED"], daysOBJ["SATHOURS WORKED"], daysOBJ["SUNHOURS WORKED"],]
+    // useEffect(() => {calWeekHours()}, [totals])
 
     function calcDayHours(abv) {
+        console.log("Calc Ran!!!", abv)
         let total = 0
         if (daysOBJ[`${abv}In`] && daysOBJ[`${abv}Out`]) {
             total = parseTime(daysOBJ[`${abv}Out`]) - parseTime(daysOBJ[`${abv}In`])
@@ -39,20 +43,19 @@ export default function DayInputs(props) {
                 }
             }        
         }
-        console.log("total:", total);
         setDays(prevDays => ({...prevDays, [`${abv}HOURS WORKED`]: total.toString() }));
-        calWeekHours()
+        console.log("total:", total);
     }
 
-    function handleChange(e, i) {
+    function handleChange(e) {
         e.persist();
-        console.log("error:", e.target);
+        console.log("error:", e.target.parentElement.name);
         setDays(prevDays => ({...prevDays, [e.target.name]: e.target.value }));
     }
 
 
     function getTimeInput(abv, end){
-        return(<div>
+        return(<div name={abv} id={abv} onClick={e => {calcDayHours(abv)}} onBlur={e => {calcDayHours(abv)}}>
             <Select
                 variant="outlined"
                 fullWidth
@@ -89,8 +92,7 @@ export default function DayInputs(props) {
                 type="time"
                 name={`${abv}Out${end}`}
                 value={daysOBJ[`${abv}Out${end}`]}
-                onChange={handleChange}
-                onBlur={e => {calcDayHours(abv)}}
+                onChange={e => {handleChange(e)}}
                 InputLabelProps={{
                     shrink: true,
                 }}
@@ -111,7 +113,6 @@ export default function DayInputs(props) {
                     {getTimeInput(abv, "")}
                     {getTimeInput(abv, "_2")}
                     {getTimeInput(abv, "_3")}
-                    {getTimeInput(abv, "_4")}
                 </Grid>)
             })}  
             </div>)
