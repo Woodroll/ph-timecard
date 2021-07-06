@@ -38,7 +38,7 @@ function App() {
   const [saturday, setSat] = useState(new Day("SAT"));
   const [sunday, setSun] = useState(new Day("SUN"));
 
-  const abvList = ["MON", "TUES", "WED", "THUR", "FRI", "SAT", "SUN"]
+  const abvList = ["MON", "TUE", "WED", "THUR", "FRI", "SAT", "SUN"]
   const [daysOBJ, setDays] = useState(new Days(abvList))
   
   const [timeCard, setTimeCard] = useState({
@@ -85,15 +85,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
         <SavePDF 
           pdf={formPDF}
           updatedPDF={updatedPDF}
           setUpdatedPDF={setUpdatedPDF}
           timeCard={timeCard}
+          daysOBJ={daysOBJ}
           />
         <Form
         timeCard = {timeCard}

@@ -26,6 +26,12 @@ const SavePDF  = (props) => {
             console.log(`key:${key}, value:${props.timeCard[key]}`)
             form.getTextField(key).setText(props.timeCard[key])
         });
+        
+        Object.keys(props.daysOBJ).forEach((key, value) => {
+            console.log(`key:${key}, value:${props.daysOBJ[key]}`);
+            if (props.daysOBJ[key]) { form.getTextField(key).setText(props.daysOBJ[key])};
+        });
+
         const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
         props.setUpdatedPDF(pdfBytes);  
         FileSaver.saveAs(pdfBytes, "pdf-lib_form_creation_example.pdf", "application/pdf");

@@ -4,7 +4,7 @@ class Days {
         for (let i = 0; i < dayAbvs.length; i++) {
                 this[`${dayAbvs[i]}Date_es_:date`] = undefined;
                 this[`${dayAbvs[i]}HOURS WORKED`] = undefined;
-                for (let index = 1; index < 5; index++) {
+                for (let index = 1; index < 4; index++) {
                     let end = ""
                     if (index !== 1){
                         end = `_${index}`

@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/Woodroll/ph-timecard/static/css/main.8c8b27cf.chunk.css",
+    "main.js": "/Woodroll/ph-timecard/static/js/main.c1149ac7.chunk.js",
+    "main.js.map": "/Woodroll/ph-timecard/static/js/main.c1149ac7.chunk.js.map",
+    "runtime-main.js": "/Woodroll/ph-timecard/static/js/runtime-main.d7746208.js",
+    "runtime-main.js.map": "/Woodroll/ph-timecard/static/js/runtime-main.d7746208.js.map",
+    "static/css/2.7d77181e.chunk.css": "/Woodroll/ph-timecard/static/css/2.7d77181e.chunk.css",
+    "static/js/2.fb8abd22.chunk.js": "/Woodroll/ph-timecard/static/js/2.fb8abd22.chunk.js",
+    "static/js/2.fb8abd22.chunk.js.map": "/Woodroll/ph-timecard/static/js/2.fb8abd22.chunk.js.map",
+    "static/js/3.e7e93b4b.chunk.js": "/Woodroll/ph-timecard/static/js/3.e7e93b4b.chunk.js",
+    "static/js/3.e7e93b4b.chunk.js.map": "/Woodroll/ph-timecard/static/js/3.e7e93b4b.chunk.js.map",
+    "index.html": "/Woodroll/ph-timecard/index.html",
+    "static/css/2.7d77181e.chunk.css.map": "/Woodroll/ph-timecard/static/css/2.7d77181e.chunk.css.map",
+    "static/css/main.8c8b27cf.chunk.css.map": "/Woodroll/ph-timecard/static/css/main.8c8b27cf.chunk.css.map",
+    "static/js/2.fb8abd22.chunk.js.LICENSE.txt": "/Woodroll/ph-timecard/static/js/2.fb8abd22.chunk.js.LICENSE.txt",
+    "static/media/fillable.8a5c035d.pdf": "/Woodroll/ph-timecard/static/media/fillable.8a5c035d.pdf",
+    "static/media/logo.6ce24c58.svg": "/Woodroll/ph-timecard/static/media/logo.6ce24c58.svg",
+    "static/media/index.css": "/Woodroll/ph-timecard/static/media/roboto-vietnamese-400-normal.c0bec65d.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d7746208.js",
+    "static/css/2.7d77181e.chunk.css",
+    "static/js/2.fb8abd22.chunk.js",
+    "static/css/main.8c8b27cf.chunk.css",
+    "static/js/main.c1149ac7.chunk.js"
+  ]
+}

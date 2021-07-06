@@ -13,25 +13,36 @@ export default function DayInputs(props) {
 
     console.log(daysOBJ);
 
-    function hoursList(abv) {
-        return [daysOBJ[`${abv}In`], daysOBJ[`${abv}Out`],
-        daysOBJ[`${abv}In_2`], daysOBJ[`${abv}Out_2`],
-        daysOBJ[`${abv}In_3`], daysOBJ[`${abv}Out_3`],
-        daysOBJ[`${abv}In_4`], daysOBJ[`${abv}Out_4`],
-        ]
+    function parseTime(time){
+        return Number(time.slice(0,2)) + (Math.round(time.slice(3,5))/15)*25*.01
     }
+
+    function calWeekHours() {
+        let total = 0
+        abvList.forEach(abv => {if(daysOBJ[`${abv}HOURS WORKED`]) {total += Number(daysOBJ[`${abv}HOURS WORKED`])}});
+        console.log("week total:", total)
+        setDays(prevDays => ({...prevDays, ["GRAND TOTALHOURS WORKED"]: total.toString() }));
+    }
+
 
     function calcDayHours(abv) {
         let total = 0
-        if (daysOBJ[`${abv}In`] !==undefined && daysOBJ[`${abv}Out`] !== undefined) {
-            console.log("It was all true!")
-            total = daysOBJ[`${abv}Out`] - daysOBJ[`${abv}In`]
+        if (daysOBJ[`${abv}In`] && daysOBJ[`${abv}Out`]) {
+            total = parseTime(daysOBJ[`${abv}Out`]) - parseTime(daysOBJ[`${abv}In`])
+            if (daysOBJ[`${abv}In_2`] && daysOBJ[`${abv}Out_2`]) {
+                total += parseTime(daysOBJ[`${abv}Out_2`]) - parseTime(daysOBJ[`${abv}In_2`])
+                if (daysOBJ[`${abv}In_3`] && daysOBJ[`${abv}Out_3`]) {
+                    total += parseTime(daysOBJ[`${abv}Out_3`]) - parseTime(daysOBJ[`${abv}In_3`])
+                    if (daysOBJ[`${abv}In_4`] && daysOBJ[`${abv}Out_4`]) {
+                        total += parseTime(daysOBJ[`${abv}Out_4`]) - parseTime(daysOBJ[`${abv}In_4`])
+                    }
+                }
+            }        
         }
-        const hours = Math.floor(total / 3600) % 24;
-        console.log(hours);
+        console.log("total:", total);
+        setDays(prevDays => ({...prevDays, [`${abv}HOURS WORKED`]: total.toString() }));
+        calWeekHours()
     }
-
-    useEffect(() => {calcDayHours("MON")}, [hoursList("MON")]);
 
     function handleChange(e, i) {
         e.persist();
@@ -72,31 +83,36 @@ export default function DayInputs(props) {
                 }}
                 sx={{ width: 150 }}
             />
-
-            <TimePicker
+            
+            <TextField
                 label="Out"
+                type="time"
+                name={`${abv}Out${end}`}
                 value={daysOBJ[`${abv}Out${end}`]}
-                onChange={(newValue) => {
-                console.log(newValue)    
-                setDays(prevDays => ({...prevDays, [`${abv}Out${end}`]: newValue.toLocaleTimeString('en-US')}));
-            }}
-            renderInput={(params) => <TextField {...params} />}
+                onChange={handleChange}
+                onBlur={e => {calcDayHours(abv)}}
+                InputLabelProps={{
+                    shrink: true,
+                }}
+                inputProps={{
+                    step: 1500, // 15 min
+                }}
+                sx={{ width: 150 }}
             />
-
         </div>            
         )
     }
 
 
-    return (<div><LocalizationProvider dateAdapter={AdapterDateFns}>
+    return (<div>
             {abvList.map((abv, i) => {
                 return(<Grid>
-                    <p>{abv}-{daysOBJ[`${abv}Date_es_:date`]}</p>
+                    <p>{abv} - {daysOBJ[`${abv}Date_es_:date`]}{daysOBJ[`${abv}HOURS WORKED`]? " - " + daysOBJ[`${abv}HOURS WORKED`]+" hrs.":""}</p>
                     {getTimeInput(abv, "")}
                     {getTimeInput(abv, "_2")}
                     {getTimeInput(abv, "_3")}
                     {getTimeInput(abv, "_4")}
                 </Grid>)
             })}  
-            </LocalizationProvider></div>)
+            </div>)
 }
