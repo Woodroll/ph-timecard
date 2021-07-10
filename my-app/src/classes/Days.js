@@ -9,14 +9,14 @@ class Days {
                     if (index !== 1){
                         end = `_${index}`
                     }
-                    this[`${dayAbvs[i]}Type Reg Vac Sick Pers Hol${end}`] = "Reg";
+                    this[`${dayAbvs[i]}Type Reg Vac Sick Pers Hol${end}`] = undefined;
                     this[`${dayAbvs[i]}In${end}`] = undefined;
                     this[`${dayAbvs[i]}Out${end}`] = undefined;              
                 }    
         }
     }
-    calcHours() {
-        return null;
+    ["GRAND TOTALHOURS WORKED"]() {
+        return "null";
     }
 }
 

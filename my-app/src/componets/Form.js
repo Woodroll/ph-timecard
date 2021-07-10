@@ -11,10 +11,17 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-// import { createStyles } from '@material-ui/core/styles';
+import { createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
 import DayInputs from './DayInputs.js'
+import Paper from '@material-ui/core/Paper';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ArchiveIcon from '@material-ui/icons/Archive';
 
 // function Copyright() {
 //   return (
@@ -31,7 +38,7 @@ import DayInputs from './DayInputs.js'
 
 
 
-// const useStyles = makeStyles((theme) => ({
+// const useStyles = createStyles((theme) => {return ({
 //   paper: {
 //     marginTop: theme.spacing(7),
 //     display: 'flex',
@@ -49,7 +56,7 @@ import DayInputs from './DayInputs.js'
 //   submit: {
 //     margin: theme.spacing(3, 0, 2),
 //   },
-// }));
+// })});
 
 
 const Form = (props) => {
@@ -81,15 +88,16 @@ const Form = (props) => {
     }
 
     return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main">
       <CssBaseline />
       <div className="classes.paper">
         <Typography component="h1" variant="h5">
-          Sign up
+          Time Card
         </Typography>
         <form className="classes.form" onSubmit={handleSubmit} onInput={handleChange} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid container spacing={2}>
+            
+            <Grid item xs={12} sm={6} md={4}>
               <TextField
                 variant="outlined"
                 required
@@ -100,7 +108,8 @@ const Form = (props) => {
                 value={timeCard? timeCard["Name"]:""}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+
+            <Grid item xs={12} sm={6} md={4}>
               <TextField
                 variant="outlined"
                 required
@@ -111,10 +120,11 @@ const Form = (props) => {
                 value={timeCard? timeCard["Position"]:""}
               />
             </Grid>
-            <Grid item xs={12}>
+
+            <Grid item xs={12} sm={6} md={4}>
               <TextField
+                //TODO: Sundays only???
                 type="date"
-                // defaultValue="2017-05-24"
                 variant="outlined"
                 required
                 fullWidth
@@ -123,16 +133,20 @@ const Form = (props) => {
                 id="PayWeekEnding"
                 onChange = {handleWeekChange}
                 value={timeCard? timeCard["Pay Week Ending"]:""}
-                sx={{ width: 220 }}
+                
                 InputLabelProps={{
                     shrink: true,
                 }}
               />
             </Grid>
+
+            <h1>{daysOBJ["GRAND TOTALHOURS WORKED"]}</h1>
+
             <DayInputs 
                 daysOBJ={daysOBJ}
                 setDays={setDays}
                 abvList={abvList}/>
+
             </Grid> 
             {/* <Grid item xs={12}>
               <FormControlLabel
@@ -148,8 +162,12 @@ const Form = (props) => {
             className="classes.submit"
             // onClick={e => console.log(e)}
           >
-            Sign Up
+            Time Card
           </Button>
+
+          
+
+
           <Grid container justify="flex-end">
             {/* <Grid item>
               <Link href="#" variant="body2">
@@ -157,10 +175,23 @@ const Form = (props) => {
               </Link>
             </Grid> */}
           </Grid>
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={10000}>
+            <BottomNavigation
+                showLabels
+                // value={value}
+                // onChange={(event, newValue) => {
+                //     setValue(newValue);
+                // }}
+            >
+            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+            <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
+            </BottomNavigation>
+            </Paper>
         </form>
       </div>
-      <Box mt={5}>
-      </Box>
+      {/* <Box mt={5}>
+      </Box> */}
     </Container>
     )
 }

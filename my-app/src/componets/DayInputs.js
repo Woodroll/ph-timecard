@@ -7,11 +7,28 @@ import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import TimePicker from '@material-ui/lab/TimePicker';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 export default function DayInputs(props) {
     const {daysOBJ, setDays, abvList} = props
 
     console.log(daysOBJ);
+
+    function DayColHead(props) {
+        const {abv, daysOBJ} = props
+        return (<>
+            <Typography variant="body2" color="textSecondary" align="center">
+                {abv}
+                {" - "}
+                {daysOBJ[`${abv}Date_es_:date`]}
+            </Typography>
+            <Typography>
+                {daysOBJ[`${abv}HOURS WORKED`]? daysOBJ[`${abv}HOURS WORKED`]+" hrs.":" -- "}
+            </Typography>
+            </>
+        );
+    }
+
 
     function parseTime(time){
         return Number(time.slice(0,2)) + (Math.round(time.slice(3,5))/15)*25*.01
@@ -45,17 +62,17 @@ export default function DayInputs(props) {
         }
         setDays(prevDays => ({...prevDays, [`${abv}HOURS WORKED`]: total.toString() }));
         console.log("total:", total);
+        calWeekHours()
     }
 
     function handleChange(e) {
-        e.persist();
-        console.log("error:", e.target.parentElement.name);
+        //e.persist();
         setDays(prevDays => ({...prevDays, [e.target.name]: e.target.value }));
     }
 
 
     function getTimeInput(abv, end){
-        return(<div name={abv} id={abv} onClick={e => {calcDayHours(abv)}} onBlur={e => {calcDayHours(abv)}}>
+        return(<Grid item container name={abv} id={abv} onClick={e => {calcDayHours(abv); calWeekHours();}} onBlur={e => {calcDayHours(abv); calWeekHours();}}>
             <Select
                 variant="outlined"
                 fullWidth
@@ -63,7 +80,7 @@ export default function DayInputs(props) {
                 label="Type"
                 name={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 value={daysOBJ[`${abv}Type Reg Vac Sick Pers Hol${end}`]}
-                onChange={handleChange}
+                onChange={e => {handleChange(e)}}
             >
                 <MenuItem value={"Reg"}>Reg</MenuItem>
                 <MenuItem value={"Vac"}>Vac</MenuItem>
@@ -75,6 +92,7 @@ export default function DayInputs(props) {
             <TextField
                 label="In"
                 type="time"
+                fullWidth
                 name={`${abv}In${end}`}
                 value={daysOBJ[`${abv}In${end}`]}
                 onChange={handleChange}
@@ -84,12 +102,13 @@ export default function DayInputs(props) {
                 inputProps={{
                     step: 1500, // 15 min
                 }}
-                sx={{ width: 150 }}
+                // sx={{ width: 150 }}
             />
             
             <TextField
                 label="Out"
                 type="time"
+                fullWidth
                 name={`${abv}Out${end}`}
                 value={daysOBJ[`${abv}Out${end}`]}
                 onChange={e => {handleChange(e)}}
@@ -99,21 +118,21 @@ export default function DayInputs(props) {
                 inputProps={{
                     step: 1500, // 15 min
                 }}
-                sx={{ width: 150 }}
+                // sx={{ width: 150 }}
             />
-        </div>            
+        </Grid>            
         )
     }
 
 
-    return (<div>
+    return (<Grid item xs={12} container alignItems="center">
             {abvList.map((abv, i) => {
-                return(<Grid>
-                    <p>{abv} - {daysOBJ[`${abv}Date_es_:date`]}{daysOBJ[`${abv}HOURS WORKED`]? " - " + daysOBJ[`${abv}HOURS WORKED`]+" hrs.":""}</p>
+                return(<Grid item sm={12/7} container spacing={2}>
+                    <Grid item><DayColHead abv={abv} daysOBJ={daysOBJ}/></Grid>
                     {getTimeInput(abv, "")}
                     {getTimeInput(abv, "_2")}
                     {getTimeInput(abv, "_3")}
                 </Grid>)
             })}  
-            </div>)
+            </Grid>)
 }
