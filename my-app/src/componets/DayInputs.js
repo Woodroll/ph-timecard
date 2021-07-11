@@ -1,13 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
+import Stack from '@material-ui/core/Stack';
 import MenuItem from '@material-ui/core/MenuItem';
-import DateFns from 'date-fns';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import TimePicker from '@material-ui/lab/TimePicker';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 
 export default function DayInputs(props) {
     const {daysOBJ, setDays, abvList} = props
@@ -31,7 +30,8 @@ export default function DayInputs(props) {
 
 
     function parseTime(time){
-        return Number(time.slice(0,2)) + (Math.round(time.slice(3,5))/15)*25*.01
+        console.log((Math.round(time.slice(3,5)/15))*25*.01)
+        return Number(time.slice(0,2)) + (Math.round(time.slice(3,5)/15))*25*.01
     }
 
     function calWeekHours() {
@@ -41,9 +41,8 @@ export default function DayInputs(props) {
         setDays(prevDays => ({...prevDays, ["GRAND TOTALHOURS WORKED"]: total.toString() }));
     }
 
-    const totals = [daysOBJ["MONHOURS WORKED"], daysOBJ["TUEHOURS WORKED"],daysOBJ["WEDHOURS WORKED"],
-    daysOBJ["THURHOURS WORKED"], daysOBJ["FRIHOURS WORKED"], daysOBJ["SATHOURS WORKED"], daysOBJ["SUNHOURS WORKED"],]
-    // useEffect(() => {calWeekHours()}, [totals])
+    // const totals = [daysOBJ["MONHOURS WORKED"], daysOBJ["TUEHOURS WORKED"],daysOBJ["WEDHOURS WORKED"],
+    // daysOBJ["THURHOURS WORKED"], daysOBJ["FRIHOURS WORKED"], daysOBJ["SATHOURS WORKED"], daysOBJ["SUNHOURS WORKED"],]
 
     function calcDayHours(abv) {
         console.log("Calc Ran!!!", abv)
@@ -70,14 +69,16 @@ export default function DayInputs(props) {
         setDays(prevDays => ({...prevDays, [e.target.name]: e.target.value }));
     }
 
-
-    function getTimeInput(abv, end){
-        return(<Grid item container name={abv} id={abv} onClick={e => {calcDayHours(abv); calWeekHours();}} onBlur={e => {calcDayHours(abv); calWeekHours();}}>
+    function getTimeInput(abv, end, key){
+        return(<Grid item container mt={3} name={abv} key={key} id={abv} onClick={e => {calcDayHours(abv); calWeekHours();}} onBlur={e => {calcDayHours(abv); calWeekHours();}}>
+            <Stack spacing={1}>
             <Select
+                input={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 variant="outlined"
                 fullWidth
                 id={`${abv}Type Reg Vac Sick Pers Hol${end}`}
-                label="Type"
+                label={<InputLabel>Type</InputLabel>}
+                id={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 name={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 value={daysOBJ[`${abv}Type Reg Vac Sick Pers Hol${end}`]}
                 onChange={e => {handleChange(e)}}
@@ -120,6 +121,8 @@ export default function DayInputs(props) {
                 }}
                 // sx={{ width: 150 }}
             />
+   
+        </Stack>    
         </Grid>            
         )
     }
@@ -127,11 +130,11 @@ export default function DayInputs(props) {
 
     return (<Grid item xs={12} container alignItems="center">
             {abvList.map((abv, i) => {
-                return(<Grid item sm={12/7} container spacing={2}>
+                return(<Grid item sm={12/7} key={i} container spacing={0}>
                     <Grid item><DayColHead abv={abv} daysOBJ={daysOBJ}/></Grid>
-                    {getTimeInput(abv, "")}
-                    {getTimeInput(abv, "_2")}
-                    {getTimeInput(abv, "_3")}
+                    {getTimeInput(abv, "", 1)}
+                    {getTimeInput(abv, "_2", 2)}
+                    {getTimeInput(abv, "_3", 3)}
                 </Grid>)
             })}  
             </Grid>)

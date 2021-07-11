@@ -1,27 +1,15 @@
 import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
+import {useEffect} from 'react';
 import Button from '@material-ui/core/Button';
-import Select from '@material-ui/core/Select';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { createStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormControl from '@material-ui/core/FormControl';
-import DayInputs from './DayInputs.js'
-import Paper from '@material-ui/core/Paper';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import DayInputs from './DayInputs.js';
 
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ArchiveIcon from '@material-ui/icons/Archive';
 
 // function Copyright() {
 //   return (
@@ -79,7 +67,6 @@ const Form = (props) => {
             console.log(`i:${i}, date:${date}, fd:${formatedDate}`)
            
             setDays(prevDays => ({...prevDays, [`${abv}Date_es_:date`]  : formatedDate})) 
-            console.log(daysOBJ)
     })
     }
 
@@ -91,10 +78,11 @@ const Form = (props) => {
     <Container component="main">
       <CssBaseline />
       <div className="classes.paper">
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h3">
           Time Card
         </Typography>
         <form className="classes.form" onSubmit={handleSubmit} onInput={handleChange} noValidate>
+
             <Grid container spacing={2}>
             
             <Grid item xs={12} sm={6} md={4}>
@@ -140,7 +128,7 @@ const Form = (props) => {
               />
             </Grid>
 
-            <h1>{daysOBJ["GRAND TOTALHOURS WORKED"]}</h1>
+            
 
             <DayInputs 
                 daysOBJ={daysOBJ}
@@ -175,19 +163,6 @@ const Form = (props) => {
               </Link>
             </Grid> */}
           </Grid>
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={10000}>
-            <BottomNavigation
-                showLabels
-                // value={value}
-                // onChange={(event, newValue) => {
-                //     setValue(newValue);
-                // }}
-            >
-            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-            <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
-            </BottomNavigation>
-            </Paper>
         </form>
       </div>
       {/* <Box mt={5}>

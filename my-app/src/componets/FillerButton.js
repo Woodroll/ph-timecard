@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { PDFDocument } from 'pdf-lib';
 import FileSaver from 'file-saver';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -44,12 +44,11 @@ const SavePDF  = (props) => {
             }
         });
 
-        const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true });
-        props.setUpdatedPDF(pdfBytes);  
+        const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true }); 
         FileSaver.saveAs(pdfBytes, `Time Card ${props.timeCard["Name"]} for ${props.timeCard["Pay Week Ending"]}`, "application/pdf");
     }
 
-    return (<BottomNavigationAction label="Download PDF" icon={<PictureAsPdfIcon/>} onClick={() => {fillForm()}}>Download PDF</BottomNavigationAction>)
+    return (<button label="Download PDF" icon={<PictureAsPdfIcon/>} onClick={() => {fillForm()}}>Download PDF</button>)
 }
 
 export default SavePDF;

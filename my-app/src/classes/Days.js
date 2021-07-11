@@ -9,7 +9,7 @@ class Days {
                     if (index !== 1){
                         end = `_${index}`
                     }
-                    this[`${dayAbvs[i]}Type Reg Vac Sick Pers Hol${end}`] = undefined;
+                    this[`${dayAbvs[i]}Type Reg Vac Sick Pers Hol${end}`] = "";
                     this[`${dayAbvs[i]}In${end}`] = undefined;
                     this[`${dayAbvs[i]}Out${end}`] = undefined;              
                 }    
