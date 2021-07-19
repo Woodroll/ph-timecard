@@ -1,8 +1,8 @@
 import React from 'react';
 import { PDFDocument } from 'pdf-lib';
 import FileSaver from 'file-saver';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import { Button } from '@material-ui/core';
 
 
 const SavePDF  = (props) => {
@@ -44,11 +44,15 @@ const SavePDF  = (props) => {
             }
         });
 
+        const today = new Date(Date.now()).toLocaleDateString()
+        form.getTextField("Employee_Signature").setText(props.timeCard["Name"])
+        form.getTextField("Employee_Sign_Date").setText(today)
+
         const pdfBytes = await pdfDoc.saveAsBase64({ dataUri: true }); 
         FileSaver.saveAs(pdfBytes, `Time Card ${props.timeCard["Name"]} for ${props.timeCard["Pay Week Ending"]}`, "application/pdf");
     }
 
-    return (<button label="Download PDF" icon={<PictureAsPdfIcon/>} onClick={() => {fillForm()}}>Download PDF</button>)
+    return (<Button variant="contained" endIcon={<PictureAsPdfIcon/>} onClick={() => {fillForm()}}>Download PDF</Button>)
 }
 
 export default SavePDF;

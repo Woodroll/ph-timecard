@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import Paper from '@material-ui/core/Paper';
 
 export default function DayInputs(props) {
     const {daysOBJ, setDays, abvList} = props
@@ -38,7 +39,7 @@ export default function DayInputs(props) {
         let total = 0
         abvList.forEach(abv => {if(daysOBJ[`${abv}HOURS WORKED`]) {total += Number(daysOBJ[`${abv}HOURS WORKED`])}});
         console.log("week total:", total)
-        setDays(prevDays => ({...prevDays, ["GRAND TOTALHOURS WORKED"]: total.toString() }));
+        setDays(prevDays => ({...prevDays, "GRAND TOTALHOURS WORKED" : total.toString() }));
     }
 
     // const totals = [daysOBJ["MONHOURS WORKED"], daysOBJ["TUEHOURS WORKED"],daysOBJ["WEDHOURS WORKED"],
@@ -70,19 +71,19 @@ export default function DayInputs(props) {
     }
 
     function getTimeInput(abv, end, key){
-        return(<Grid item container mt={3} name={abv} key={key} id={abv} onClick={e => {calcDayHours(abv); calWeekHours();}} onBlur={e => {calcDayHours(abv); calWeekHours();}}>
-            <Stack spacing={1}>
+        return(<Grid item container fullWidth sx={12} mt={3} name={abv} key={key} id={abv} onClick={e => {calcDayHours(abv); calWeekHours();}} onBlur={e => {calcDayHours(abv); calWeekHours();}}>
+            <Stack spacing={1}  alignItems="stretch" direction={{ xs: 'row', sm: 'column' }}>
             <Select
-                input={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 variant="outlined"
                 fullWidth
                 id={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 label={<InputLabel>Type</InputLabel>}
-                id={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 name={`${abv}Type Reg Vac Sick Pers Hol${end}`}
                 value={daysOBJ[`${abv}Type Reg Vac Sick Pers Hol${end}`]}
                 onChange={e => {handleChange(e)}}
+                sx={{ width: 150 }}
             >
+                <MenuItem value={""}>---</MenuItem>
                 <MenuItem value={"Reg"}>Reg</MenuItem>
                 <MenuItem value={"Vac"}>Vac</MenuItem>
                 <MenuItem value={"Sick"}>Sick</MenuItem>
@@ -99,10 +100,12 @@ export default function DayInputs(props) {
                 onChange={handleChange}
                 InputLabelProps={{
                     shrink: true,
+                    elevation: 0,
                 }}
                 inputProps={{
                     step: 1500, // 15 min
                 }}
+                elevation={0}
                 // sx={{ width: 150 }}
             />
             
@@ -126,16 +129,16 @@ export default function DayInputs(props) {
         </Grid>            
         )
     }
+    
 
-
-    return (<Grid item xs={12} container alignItems="center">
+    return (<Grid item xs={12} container alignItems="center" justifyContent="center">
             {abvList.map((abv, i) => {
-                return(<Grid item sm={12/7} key={i} container spacing={0}>
-                    <Grid item><DayColHead abv={abv} daysOBJ={daysOBJ}/></Grid>
+                return(<Stack item fullWidth sm={12/7} xs={12} key={i} container spacing={0} alignItems="center">
+                    <Stack mt={3} ><DayColHead  abv={abv} daysOBJ={daysOBJ}/></Stack>
                     {getTimeInput(abv, "", 1)}
                     {getTimeInput(abv, "_2", 2)}
                     {getTimeInput(abv, "_3", 3)}
-                </Grid>)
-            })}  
+                </Stack>)
+            })}
             </Grid>)
 }

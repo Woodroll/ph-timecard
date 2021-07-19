@@ -11,8 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
-import RestoreIcon from '@material-ui/icons/Restore';
-import ArchiveIcon from '@material-ui/icons/Archive';
+// import RestoreIcon from '@material-ui/icons/Restore';
+// import ArchiveIcon from '@material-ui/icons/Archive';
 
 
 function App() {
@@ -26,6 +26,24 @@ function App() {
     "Pay Week Ending": undefined,
   });
   
+  function setDatesOfTheWeek(inDate){
+    abvList.forEach((abv, i)=>{
+    const dateSunday = new Date(Date.parse(`${inDate}T00:00:00`));             
+    const date = new Date(dateSunday.setDate(dateSunday.getDate() - (6 - i)))
+    const formatedDate = `${date.getMonth()+1}/${date.getDate()}`
+    console.log(`i:${i}, date:${date}, fd:${formatedDate}`)
+   
+    setDays(prevDays => ({...prevDays, [`${abv}Date_es_:date`]  : formatedDate})) 
+    })
+  }
+
+  function calWeekHours() {
+    let total = 0
+    abvList.forEach(abv => {if(daysOBJ[`${abv}HOURS WORKED`]) {total += Number(daysOBJ[`${abv}HOURS WORKED`])}});
+    console.log("week total:", total)
+    setDays(prevDays => ({...prevDays, "GRAND TOTALHOURS WORKED" : total.toString() }));
+  }
+
   useEffect(() => {
     // getPDF()
     const data = localStorage.getItem("my-time-card"); 
@@ -76,7 +94,7 @@ function App() {
               timeCard={timeCard}
               daysOBJ={daysOBJ}
             />
-            <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} />
+            {/* <BottomNavigationAction label="Archive" icon={<ArchiveIcon />} /> */}
           </BottomNavigation>
         </Paper>
 
